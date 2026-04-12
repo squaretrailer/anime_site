@@ -1,0 +1,518 @@
+/* ============================================
+   UNIVERSAL & BASE STYLES
+   ============================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Montserrat", sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #fff;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+header {
+    width: 100%;
+    background-color: #111;
+    border-bottom: 1px solid #333;
+}
+
+.nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+}
+
+.logo img {
+    width: 10rem;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.menu ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0.8rem 1.2rem;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+}
+
+.menu a:hover {
+    background-color: #333;
+    color: #ffcc00;
+}
+
+/* Search bar inside nav */
+.search-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.search-container input {
+    padding: 0.6rem 1rem;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 2rem;
+    background-color: #333;
+    color: #fff;
+    width: 16rem;
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    background-color: #444;
+    width: 20rem;
+    outline: none;
+}
+
+.search-container button {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    color: #111;
+    font-size: 1.4rem;
+}
+
+.search-container button:hover {
+    background-color: #e6b800;
+}
+
+/* ============================================
+   SLIDESHOW
+   ============================================ */
+.slideshow-container {
+    position: relative;
+    max-width: 1000px;
+    height: 500px;
+    margin: 3rem auto;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
+}
+
+.slide {
+    display: none;
+    height: 100%;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0.3rem;
+    text-decoration: none;
+}
+
+.prev { left: 1rem; }
+.next { right: 1rem; }
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.dots-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.dot {
+    cursor: pointer;
+    height: 1.2rem;
+    width: 1.2rem;
+    margin: 0 0.5rem;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active, .dot:hover {
+    background-color: #ffcc00;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1s;
+}
+
+@keyframes fade {
+    from {opacity: 0.4;}
+    to {opacity: 1;}
+}
+
+/* ============================================
+   ANIME COLLECTION (CRUD CARDS)
+   ============================================ */
+.other-animes {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.other-animes h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    color: #ffcc00;
+    border-left: 4px solid #ffcc00;
+    padding-left: 1rem;
+}
+
+.anime-controls {
+    text-align: right;
+    margin-bottom: 2rem;
+}
+
+#addAnimeBtn {
+    background-color: #ffcc00;
+    color: #111;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#addAnimeBtn:hover {
+    background-color: #e6b800;
+    transform: translateY(-2px);
+}
+
+.other-anime-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.other-anime {
+    background-color: #1e1e1e;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.other-anime:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.3);
+}
+
+.other-anime img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    display: block;
+}
+
+.other-anime-info {
+    padding: 1.5rem;
+}
+
+.other-anime-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: #ffcc00;
+}
+
+.other-anime-info p {
+    font-size: 1.4rem;
+    color: #ccc;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.card-buttons button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-buttons button.edit-btn:hover {
+    background-color: #ffcc00;
+    color: #111;
+}
+
+.card-buttons button.delete-btn:hover {
+    background-color: #e74c3c;
+}
+
+/* ============================================
+   EXTERNAL SEARCH SECTION (Jikan API)
+   ============================================ */
+.search-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.search-section h2 {
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+    color: #ffcc00;
+    border-left: 4px solid #ffcc00;
+    padding-left: 1rem;
+}
+
+.search-area {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#searchQuery {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #333;
+    color: #fff;
+}
+
+#doSearch {
+    background-color: #ffcc00;
+    color: #111;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.search-result-card {
+    background-color: #1e1e1e;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.search-result-card:hover {
+    transform: translateY(-5px);
+}
+
+.search-result-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.search-result-card .info {
+    padding: 1rem;
+}
+
+.search-result-card h4 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: #ffcc00;
+}
+
+.search-result-card p {
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+    background-color: #111;
+    padding: 3rem 2rem 1.5rem;
+    margin-top: 4rem;
+    border-top: 1px solid #333;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-form {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-form h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #ffcc00;
+}
+
+.footer-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-form input {
+    padding: 0.8rem 1rem;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.footer-form button {
+    background-color: #ffcc00;
+    color: #111;
+    border: none;
+    padding: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.footer-right {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #ffcc00;
+    transform: translateY(-3px);
+}
+
+.anime-message {
+    background-color: rgba(255, 204, 0, 0.1);
+    border-left: 4px solid #ffcc00;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.anime-message p {
+    font-size: 1.4rem;
+    color: #ddd;
+    line-height: 1.5;
+}
+
+footer > p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    border-top: 1px solid #333;
+    padding-top: 1.5rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .menu {
+        justify-content: center;
+    }
+    .search-container {
+        margin-left: 0;
+    }
+    .footer-container {
+        flex-direction: column;
+    }
+    .social-links {
+        justify-content: center;
+    }
+    .anime-message {
+        text-align: center;
+    }
+    .slideshow-container {
+        height: 300px;
+    }
+}
