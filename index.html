@@ -11,63 +11,68 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-   <main>
-    <!-- HEADER (unchanged) -->
-    <header>
-        <div class="nav">
-            <div class="logo">
-                <img src="images/logo.avif" alt="Anime Site Logo">
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <div class="search-container">
-                    <input type="text" placeholder="Search anime..." id="navSearchInput">
-                    <button id="navSearchBtn"><i class="fas fa-search"></i></button>
+    <main>
+        <header>
+            <div class="nav">
+                <div class="logo">
+                    <img src="images/logo.avif" alt="Anime Site Logo">
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#anime-collection">Anime Collection</a></li>
+                        <li><a href="#search-section">Search</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- SLIDESHOW (unchanged) -->
-    <section class="slideshow-container">
-        <div class="slide fade">
-            <img src="images/naruto2.webp" alt="Naruto">
-            <div class="caption">Naruto - A young ninja who seeks recognition and dreams of becoming Hokage.</div>
+        <!-- Home section (slideshow) -->
+        <section class="slideshow-container" id="home">
+            <div class="slide fade">
+                <img src="images/naruto.jpg" alt="Naruto">
+                <div class="caption">Naruto - A young ninja who seeks recognition and dreams of becoming Hokage.</div>
+            </div>
+            <div class="slide fade">
+                <img src="images/attack_on_titan.jpg" alt="Attack on Titan">
+                <div class="caption">Attack on Titan - Humanity fights for survival against gigantic humanoid creatures.</div>
+            </div>
+            <div class="slide fade">
+                <img src="images/demon_slayer.jpg" alt="Demon Slayer">
+                <div class="caption">Demon Slayer - A boy becomes a demon slayer to avenge his family and cure his sister.</div>
+            </div>
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </section>
+        <div class="dots-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
         </div>
-        <div class="slide fade">
-            <img src="images/aot.jpg" alt="Attack on Titan">
-            <div class="caption">Attack on Titan - Humanity fights for survival against gigantic humanoid creatures.</div>
-        </div>
-        <div class="slide fade">
-            <img src="images/demon slayer.jpg" alt="Demon Slayer">
-            <div class="caption">Demon Slayer - A boy becomes a demon slayer to avenge his family and cure his sister.</div>
-        </div>
-        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-        <a class="next" onclick="changeSlide(1)">&#10095;</a>
-    </section>
-    <div class="dots-container">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-    </div>
 
-    <!-- ANIME COLLECTION (CRUD) + SEARCH RESULTS -->
-    <section class="other-animes">
-        <h2>📀 Anime Collection</h2>
-        <div class="anime-controls">
-            <button id="addAnimeBtn">➕ Add New Anime</button>
-        </div>
-        <div id="animeGrid" class="other-anime-list"></div>
-        <!-- Search results will appear here -->
-        <div id="searchResults" class="search-results"></div>
-    </section>
-</main>
-    <!-- ========== FOOTER ========== -->
-    <footer>
+        <!-- Anime Collection section -->
+        <section class="other-animes" id="anime-collection">
+            <h2>📀 Anime Collection</h2>
+            <div class="anime-controls">
+                <button id="addAnimeBtn">➕ Add New Anime</button>
+            </div>
+            <div id="animeGrid" class="other-anime-list"></div>
+        </section>
+
+        <!-- Search section -->
+        <section class="search-section" id="search-section">
+            <h2>🔍 Search Anime from MyAnimeList</h2>
+            <div class="search-area">
+                <input type="text" id="searchQuery" placeholder="e.g., Naruto, Attack on Titan">
+                <button id="doSearch">Search</button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+        </section>
+    </main>
+
+    <!-- Footer with contact id -->
+    <footer id="contact">
         <div class="footer-container">
             <div class="footer-form">
                 <h3>Contact Us</h3>
@@ -93,6 +98,7 @@
             </div>
         </div>
         <p>&copy; 2025 Anime Site. All rights reserved.</p>
+        <button>Back to Top</button>
     </footer>
 
     <script src="script.js"></script>

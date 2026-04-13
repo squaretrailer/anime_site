@@ -36,6 +36,27 @@ let animeList = [
 ];
 let nextId = 7;
 
+// Safe image error handler – prevents infinite loop
+function handleImageError(imgElement) {
+    if (imgElement.getAttribute('data-error-fallback') === 'true') return;
+    imgElement.setAttribute('data-error-fallback', 'true');
+    imgElement.src = 'images/placeholder.jpg';
+    // Ultimate fallback if placeholder also fails
+    imgElement.onerror = () => {
+        imgElement.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="gray"%3E%3Crect width="24" height="24" fill="%23333"/%3E%3Ctext x="4" y="16" fill="white"%3E?%3C/text%3E%3C/svg%3E';
+    };
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
 function renderAnimeCards() {
     const grid = document.getElementById('animeGrid');
     if (!grid) return;
@@ -43,17 +64,23 @@ function renderAnimeCards() {
     animeList.forEach(anime => {
         const card = document.createElement('div');
         card.className = 'other-anime';
-        card.innerHTML = `
-            <img src="${anime.image}" alt="${anime.title}">
-            <div class="other-anime-info">
-                <h3>${anime.title}</h3>
-                <p>${anime.description}</p>
-                <div class="card-buttons">
-                    <button class="edit-btn" data-id="${anime.id}">✏️ Edit</button>
-                    <button class="delete-btn" data-id="${anime.id}">🗑️ Delete</button>
-                </div>
+        const img = document.createElement('img');
+        img.src = anime.image;
+        img.alt = anime.title;
+        img.onerror = function() { handleImageError(this); };
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'other-anime-info';
+        infoDiv.innerHTML = `
+            <h3>${escapeHtml(anime.title)}</h3>
+            <p>${escapeHtml(anime.description)}</p>
+            <div class="card-buttons">
+                <button class="edit-btn" data-id="${anime.id}">✏️ Edit</button>
+                <button class="delete-btn" data-id="${anime.id}">🗑️ Delete</button>
             </div>
         `;
+        card.appendChild(img);
+        card.appendChild(infoDiv);
         grid.appendChild(card);
     });
 
@@ -71,7 +98,9 @@ function addAnime() {
     let description = prompt("Enter short description:");
     if (!description) return;
     let image = prompt("Enter image path (e.g., images/yourimage.jpg):", "images/placeholder.jpg");
-    const newAnime = { id: nextId++, title, description, image: image || "images/placeholder.jpg" };
+    if (!image) image = "images/placeholder.jpg";
+    
+    const newAnime = { id: nextId++, title, description, image };
     animeList.push(newAnime);
     renderAnimeCards();
 }
@@ -96,10 +125,10 @@ function deleteAnime(id) {
 }
 
 // ============================================
-// EXTERNAL SEARCH (Jikan API) – from navbar
+// EXTERNAL SEARCH (Jikan API)
 // ============================================
-async function searchAnimeFromNav() {
-    const query = document.getElementById('navSearchInput').value.trim();
+async function searchAnime() {
+    const query = document.getElementById('searchQuery').value.trim();
     const resultsDiv = document.getElementById('searchResults');
     if (!query) {
         resultsDiv.innerHTML = '<p>Please enter an anime name.</p>';
@@ -117,8 +146,8 @@ async function searchAnimeFromNav() {
                 card.innerHTML = `
                     <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
                     <div class="info">
-                        <h4>${anime.title}</h4>
-                        <p>${anime.synopsis ? anime.synopsis.substring(0, 100) + '...' : 'No synopsis'}</p>
+                        <h4>${escapeHtml(anime.title)}</h4>
+                        <p>${anime.synopsis ? escapeHtml(anime.synopsis.substring(0, 100)) + '...' : 'No synopsis'}</p>
                     </div>
                 `;
                 resultsDiv.appendChild(card);
@@ -133,22 +162,34 @@ async function searchAnimeFromNav() {
 }
 
 // ============================================
+// BACK TO TOP BUTTON
+// ============================================
+function setupBackToTop() {
+    const backBtn = document.querySelector('footer button');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+}
+
+// ============================================
 // INITIALIZE EVERYTHING
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Slideshow
     showSlide(slideIndex);
-    // Anime cards
     renderAnimeCards();
-    // Add button
-    document.getElementById('addAnimeBtn').addEventListener('click', addAnime);
-    // Navbar search events
-    const navSearchBtn = document.getElementById('navSearchBtn');
-    const navSearchInput = document.getElementById('navSearchInput');
-    if (navSearchBtn && navSearchInput) {
-        navSearchBtn.addEventListener('click', searchAnimeFromNav);
-        navSearchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchAnimeFromNav();
+    setupBackToTop();
+    
+    const addBtn = document.getElementById('addAnimeBtn');
+    if (addBtn) addBtn.addEventListener('click', addAnime);
+    
+    const searchBtn = document.getElementById('doSearch');
+    const searchInput = document.getElementById('searchQuery');
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', searchAnime);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchAnime();
         });
     }
 });
