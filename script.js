@@ -32,7 +32,7 @@ let animeList = [
     { id: 8, title: "86", description: "A man who wants to become a great teacher.", image: "images/86.avif" },
     { id: 9, title: "Devil May Cry", description: "A man who is born as a half-human and half-devil.", image: "images/devil_may_cry.webp" }
 ];
-let nextId = 7;
+let nextId = 10; // fixed: next available ID after 9
 
 function handleImageError(img) {
     if (img.getAttribute('data-error')) return;
@@ -121,17 +121,17 @@ async function searchAnime() {
 }
 
 // ============================================
-// BACK TO TOP (DIRECT FIX)
+// BACK TO TOP – using ID for reliability
 // ============================================
 function setupBackToTop() {
-    const btn = document.querySelector('footer button');
+    const btn = document.getElementById('backToTopBtn');
     if (btn) {
         btn.onclick = function(e) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
-        console.log('Back to Top button attached');
+        console.log('Back to Top button attached via ID');
     } else {
-        console.error('Back button not found');
+        console.error('Button with id="backToTopBtn" not found');
     }
 }
 
